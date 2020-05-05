@@ -1,0 +1,57 @@
+{
+  "name": "terragonltd-serverless-template",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "SLS_DEBUG=* serverless offline",
+    "test": "jest --coverage",
+    "lint": "eslint . --ext .js",
+    "lint:fix": "eslint . --ext .js --fix"
+  },
+  "author": "James Falade <jfalade@terragonltd.com>",
+  "license": "UNLICENSED",
+  "devDependencies": {
+    "eslint": "^6.5.1",
+    "eslint-config-airbnb-base": "^14.0.0",
+    "eslint-plugin-import": "^2.18.2",
+    "jest": "^24.9.0",
+    "nyc": "^14.1.1",
+    "pre-commit": "^1.2.2",
+    "serverless-dotenv-plugin": "^2.1.1",
+    "serverless-offline": "^5.12.0"
+  },
+  "dependencies": {
+    "@hapi/joi": "^16.1.7",
+    "aws-sdk": "^2.553.0",
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "express-async-handler": "^1.1.4",
+    "serverless-http": "^2.3.0",
+    "terra-es": "bitbucket:terragonengineering/terra-elasticsearch-client#1.0",
+    "terra-logger": "bitbucket:terragonengineering/terra-logger-js#1.0"
+  },
+  "jest": {
+    "verbose": true,
+    "coveragePathIgnorePatterns": [
+      "node_modules",
+      "test-config",
+      "interfaces",
+      "jestGlobalMocks.ts",
+      ".module.ts",
+      "tests/",
+      ".mock.ts"
+    ],
+    "coverageThreshold": {
+      "global": {
+        "branches": 70,
+        "functions": 70,
+        "lines": 70,
+        "statements": -10
+      }
+    }
+  },
+  "pre-commit": [
+    "test"
+  ]
+}
