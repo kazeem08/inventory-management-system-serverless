@@ -1,3 +1,4 @@
+const bcrypt = require('bcrypt');
 const UserModel = require('../models/user');
 
 module.exports = {
@@ -9,8 +10,11 @@ module.exports = {
     },
 
     async createUser(params){
-        const result = await UserModel.create(params);
-        console.log('RESULT',  result);
+        const body = params;
+        let { password } = body;
+        const salt = await bcrypt.genSalt(10);
+        body.password = await bcrypt.hash(password, salt);
+        const result = await UserModel.create(body);
         // return ['kazeem'];
         return result;
     }
