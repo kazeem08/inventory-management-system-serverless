@@ -1,15 +1,15 @@
-const UserModel = require('../models/user');
+const ClientModel = require('../models/client');
 
 module.exports = {
-    async getUsers(params){
-        const result = await UserModel.find();
+    async getClients(params){
+        const result = await ClientModel.find();
         console.log('RESULT',  result);
         // return ['kazeem'];
         return result;
     },
 
-    async createUser(params){
-        const result = await UserModel.create(params);
+    async createClient(params){
+        const result = await ClientModel.create(params);
         console.log('RESULT',  result);
         // return ['kazeem'];
         return result;

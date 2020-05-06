@@ -12,7 +12,7 @@ route.get('/', asyncHandler((req, res) => UserController.getAllUsers(req, res)))
 
 route.get('/:id', asyncHandler((req, res) => UserController.getProduct(req, res)));
 
-route.post('/', asyncHandler((req, res) => UserController.addProduct(req, res)));
+route.post('/', asyncHandler((req, res) => UserController.createUser(req, res)));
 
 route.put('/:id', asyncHandler((req, res) => UserController.updateProduct(req, res)));
 
