@@ -2,7 +2,7 @@ require('./init');
 const serverless = require('serverless-http');
 const express = require('express');
 const bodyParser = require('body-parser');
-const TerraLogger = require('terra-logger');
+// const TerraLogger = require('terra-logger');
 const responseManager = require('./lib/response_manager_middleware');
 const errorHandler = require('./lib/request_error_handler');
 
@@ -18,12 +18,12 @@ app.use(bodyParser.json());
 
 app.use(responseManager);
 
-app.use(TerraLogger.requestHandler);
+// app.use(TerraLogger.requestHandler);
 
 require('./routes')(app);
 
 app.get('/', async (req, res) => {
-  res.send(`welcome to ${process.env.APP_NAME}`);
+  res.send(`Welcome to ${process.env.APP_NAME}`);
 });
 // must be the last middleware
 app.use(errorHandler);

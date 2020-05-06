@@ -1,12 +1,12 @@
 # Welcome to Serverless!
 
 
-service: terragonltd-serverless-template
-app: terragon-serverless
+service: inventory-management-system
+app: inventory-management-system
 
 provider:
   name: aws
-  stage: ${env:STAGE}
+  stage: prod
   region: ${env:REGION}
   #TODO remove iamRoleStatements if you are not using SQS
   iamRoleStatements:
@@ -18,15 +18,6 @@ provider:
         - "es:ESHttpPost"
       Resource: "arn:aws:es:${self:provider.region}:${env:AWS_ACCOUNT_ID}:*"
   runtime: nodejs10.x
-  vpc:
-    securityGroupIds:
-      "Fn::Split":
-        - ","
-        - ${env:SECURITY_GROUP_IDS}
-    subnetIds:
-      "Fn::Split":
-        - ","
-        - ${env:SUBNET_IDS}
 
 
 functions:

@@ -1,12 +1,8 @@
-const TerraLogger = require('terra-logger');
 const ProductService = require('../services/product');
 const { createProductSchema } = require('../schemas/products');
-const AwsSqs = require('../lib/aws_sqs');
-
 
 module.exports = {
   async addProduct(req, res) {
-    const logger = TerraLogger.fromContext(req);
 
     logger.debug('Adding Product');
 
