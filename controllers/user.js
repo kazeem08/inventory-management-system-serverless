@@ -18,9 +18,19 @@ module.exports = {
 
     async createUser(req, res){
         try{
-            console.log('I AM HERRE');
+            const {role, _id} = req.user;
+
+            // check if user has admin privilege
+            if(role !== 'Admin'){
+                return res.errorResponse({
+                    message: 'Unauthorized Access',
+                    statusCode: 401,
+                })
+            }
+            
+            req.body._id = _id;
             const users = await UserService.createUser(req.body);
-            console.log(users);
+
             return res.successResponse({
                 message: (users.length < 1) ? 'No user available' : 'Successful',
                 data: users,
@@ -33,12 +43,18 @@ module.exports = {
     },
 
     async login(req, res){
-        console.log(req.body, 'hererererr')
         const token = await UserService.login(req.body);
-        return res.successResponse({
-            message: 'User successfully login',
-            data: { token },
-          });
+        if(token){
+            return res.successResponse({
+                message: 'User successfully login',
+                data: { token },
+              });
+        };
+
+        return res.errorResponse({
+            message: 'Invalid username/password',
+        })
+       
 
     }
 }

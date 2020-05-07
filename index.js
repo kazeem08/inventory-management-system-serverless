@@ -5,6 +5,7 @@ const bodyParser = require('body-parser');
 // const TerraLogger = require('terra-logger');
 const responseManager = require('./lib/response_manager_middleware');
 const errorHandler = require('./lib/request_error_handler');
+const auth = require('./lib/auth');
 
 const app = express();
 
@@ -20,11 +21,14 @@ app.use(responseManager);
 
 // app.use(TerraLogger.requestHandler);
 
+app.use(auth);
+
 require('./routes')(app);
 
 app.get('/', async (req, res) => {
   res.send(`Welcome to ${process.env.APP_NAME}`);
 });
+
 // must be the last middleware
 app.use(errorHandler);
 

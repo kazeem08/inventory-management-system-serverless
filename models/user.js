@@ -4,10 +4,21 @@ const { Schema } = mongoose;
 
 
 const userSchema = new Schema({
-    name: {
+    first_name: {
         type: String,
         required: true,
     },
+    last_name: {
+        type: String,
+        required: true,
+    },
+    date_of_birth: {
+        type: String,
+    },
+    email: {
+        type: String,
+        required: true,
+    }, 
     password: {
         type: String,
         required: true,
@@ -16,7 +27,11 @@ const userSchema = new Schema({
         type: String,
         required: true,
     },
-    email: {
+    gender: {
+        type: String,
+        required: true,
+    },
+    address: {
         type: String,
         required: true,
     }, 
@@ -26,6 +41,11 @@ const userSchema = new Schema({
     },
     role: {
         type: String,
+        required: true
+    },
+    write: {
+        type: Boolean,
+        default: false,
         required: true
     }
 }, {
