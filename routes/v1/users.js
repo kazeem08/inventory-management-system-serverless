@@ -14,6 +14,8 @@ route.get('/:id', asyncHandler((req, res) => UserController.getProduct(req, res)
 
 route.post('/', asyncHandler((req, res) => UserController.createUser(req, res)));
 
+route.post('/login', asyncHandler((req, res) => UserController.login(req, res)));
+
 route.put('/:id', asyncHandler((req, res) => UserController.updateProduct(req, res)));
 
 route.delete('/:id', asyncHandler((req, res) => UserController.deleteProduct(req, res)));

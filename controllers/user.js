@@ -1,5 +1,4 @@
 const UserService = require('../services/user');
-
 module.exports = {
     async getAllUsers(req, res){
         try{
@@ -31,5 +30,15 @@ module.exports = {
             console.log(e);
         }
        
+    },
+
+    async login(req, res){
+        console.log(req.body, 'hererererr')
+        const token = await UserService.login(req.body);
+        return res.successResponse({
+            message: 'User successfully login',
+            data: { token },
+          });
+
     }
 }
