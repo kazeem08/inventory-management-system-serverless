@@ -1,25 +1,24 @@
-const ProductService = require('../services/product');
+const CustomerService = require('../services/customer');
 
 module.exports = {
-    async addProduct(req, res) {
+    async createCustomer(req, res) {
         try {
             const { _id } = req.user;
-            const product = await ProductService.createProduct(req.body, _id);
-            console.log(product);
+            const customer = await CustomerService.addCustomer(req.body, _id);
+            console.log(customer);
             return res.successResponse({
-                message: 'Product succesfully added',
-                data: product,
-                total: 0,
+                message: 'Customer succesfully added',
+                data: customer,
             });
         } catch (e) {
             console.log(e);
         }
     },
 
-    async getAllProducts(req, res) {
+    async getCustomers(req, res) {
         try {
             const { _id } = req.user;
-            const product = await ProductService.getAll(_id);
+            const product = await CustomerService.getAllCustomers(_id);
             return res.successResponse({
                 message: (product.length < 1) ? 'No product available' : 'Successful',
                 data: product,
