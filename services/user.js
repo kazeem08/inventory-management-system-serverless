@@ -1,4 +1,4 @@
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 ;
 const UserModel = require('../models/user');
@@ -21,7 +21,7 @@ module.exports = {
         let { password, _id } = body;
 
         //get client _id from admin details
-        const { client_id } = await UserModel.findOne({_id});
+        const { client_id } = await UserModel.findById(_id);
         body.client_id = client_id;  // add client_id to the user details
         delete body._id;
 

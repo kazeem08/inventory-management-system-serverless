@@ -10,7 +10,7 @@ const ProductsController = require('../../controllers/product');
 
 route.get('/', asyncHandler((req, res) => ProductsController.getAllProducts(req, res)));
 
-route.get('/:id', asyncHandler((req, res) => ProductsController.getProduct(req, res)));
+route.get('/:id', asyncHandler((req, res) => ProductsController.getProductById(req, res)));
 
 route.post('/', asyncHandler((req, res) => ProductsController.addProduct(req, res)));
 

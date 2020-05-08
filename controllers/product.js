@@ -3,7 +3,6 @@ const ProductService = require('../services/product');
 module.exports = {
     async addProduct(req, res) {
         try {
-
             const product = await ProductService.createProduct(req.body);
             console.log(product);
             return res.successResponse({
@@ -19,7 +18,6 @@ module.exports = {
 
     async getAllProducts(req, res) {
         try {
-
             const product = await ProductService.getAll();
             return res.successResponse({
                 message: (product.length < 1) ? 'No product available' : 'Successful',
@@ -28,7 +26,30 @@ module.exports = {
             })
         } catch (e) {
             console.log(e);
+
         }
 
+    },
+
+    async getProductById(req, res) {
+        try {
+            const product = await ProductService.findProductById(req.params.id);
+            
+            if (!product) {
+                return res.errorResponse({
+                    message: `Product not found`,
+                    statusCode: 404
+                })
+            }
+            return res.successResponse({
+                message: 'User fetched succesfully',
+                data: product,
+            });
+        } catch (e) {
+            console.log(e);
+            return res.successResponse({
+                message: 'Internal server error',
+            });
+        }
     },
 }

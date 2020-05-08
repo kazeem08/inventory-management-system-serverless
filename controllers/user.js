@@ -20,6 +20,13 @@ module.exports = {
             const { _id } = req.user;
 
             const user = await UserService.findUserById(_id);
+
+            if (!user) {
+                return res.errorResponse({
+                    message: `User not found`,
+                    statusCode: 404
+                })
+            }
             return res.successResponse({
                 message: 'User fetched succesfully',
                 data: user,
@@ -66,7 +73,7 @@ module.exports = {
 
         return res.errorResponse({
             message: 'Invalid username/password',
-        })
+        });
 
     }
 }
