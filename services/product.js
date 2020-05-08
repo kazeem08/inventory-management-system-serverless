@@ -6,4 +6,9 @@ module.exports = {
           const product = await ProductModel.create(params);
           return product;
   },
+
+  async getAll(params){
+    const product = await ProductModel.find();
+    return product;
+},
 }

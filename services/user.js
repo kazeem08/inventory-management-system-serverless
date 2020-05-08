@@ -10,6 +10,12 @@ module.exports = {
         return result;
     },
 
+    async findUserById(id){
+        const result = await UserModel.findOne({_id : id});
+        console.log('RESULT',  result);
+        return result;
+    },
+
     async createUser(params){
         const body = params;
         let { password, _id } = body;

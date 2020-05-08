@@ -10,7 +10,7 @@ const UserController = require('../../controllers/user');
 
 route.get('/', asyncHandler((req, res) => UserController.getAllUsers(req, res)));
 
-route.get('/:id', asyncHandler((req, res) => UserController.getProduct(req, res)));
+route.get('/:id', asyncHandler((req, res) => UserController.getUserById(req, res)));
 
 route.post('/', asyncHandler((req, res) => UserController.createUser(req, res)));
 

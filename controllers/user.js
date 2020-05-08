@@ -2,7 +2,6 @@ const UserService = require('../services/user');
 module.exports = {
     async getAllUsers(req, res){
         try{
-            console.log('I AM HERRE');
             const users = await UserService.getUsers(req.params);
             console.log(users);
             return res.successResponse({
@@ -14,6 +13,20 @@ module.exports = {
             console.log(e);
         }
        
+    },
+
+    async getUserById(req, res){
+        try{
+            const { _id } = req.user;
+
+            const user = await UserService.findUserById(_id);
+            return res.successResponse({
+                message: 'User fetched succesfully',
+                data: user,
+              });
+        } catch(e){
+            console.log(e);
+        }
     },
 
     async createUser(req, res){
