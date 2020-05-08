@@ -9,7 +9,7 @@ module.exports = {
             console.log(clients);
             return res.successResponse({
                 message: (clients.length < 1) ? 'No user available' : 'Successful',
-                data: users,
+                data: clients,
                 total: 0,
               });
         } catch(e){

@@ -5,7 +5,7 @@ const route = express.Router();
 // used to enable catching and handling errors globally
 const asyncHandler = require('express-async-handler');
 
-const ProductsController = require('../../controllers/products');
+const ProductsController = require('../../controllers/product');
 
 
 route.get('/', asyncHandler((req, res) => ProductsController.getAllProducts(req, res)));

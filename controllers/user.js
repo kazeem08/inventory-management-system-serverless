@@ -21,7 +21,7 @@ module.exports = {
             const {role, _id} = req.user;
 
             // check if user has admin privilege
-            if(role !== 'Admin'){
+            if(role !== 'admin'){
                 return res.errorResponse({
                     message: 'Unauthorized Access',
                     statusCode: 401,
@@ -54,7 +54,6 @@ module.exports = {
         return res.errorResponse({
             message: 'Invalid username/password',
         })
-       
 
     }
 }
