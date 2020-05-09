@@ -15,10 +15,10 @@ module.exports = {
         }
     },
 
-    async getCustomers(req, res) {
+    async getAllCustomers(req, res) {
         try {
             const { _id } = req.user;
-            const product = await CustomerService.getAllCustomers(_id);
+            const product = await CustomerService.getCustomers(_id);
             return res.successResponse({
                 message: (product.length < 1) ? 'No product available' : 'Successful',
                 data: product,

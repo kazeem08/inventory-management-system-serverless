@@ -14,7 +14,7 @@ module.exports = {
     return customer;
   },
 
-  async getAllCustomers(id) {
+  async getCustomers(id) {
     const { client_id } = await UserModel.findById(id);
 
     const customer = await CustomerModel.find({client_id});

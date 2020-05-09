@@ -21,7 +21,7 @@ const productSchema = new Schema({
     default: 'inventory'
   },
   sales_price: {
-    type: String,
+    type: Number,
     required: true,
   },
   tag: {

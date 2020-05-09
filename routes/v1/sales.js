@@ -8,7 +8,7 @@ const asyncHandler = require('express-async-handler');
 const SalesController = require('../../controllers/sales');
 
 
-route.get('/', asyncHandler((req, res) => SalesController.getSales(req, res)));
+route.get('/', asyncHandler((req, res) => SalesController.getAllSales(req, res)));
 
 route.get('/:id', asyncHandler((req, res) => SalesController.getSalesById(req, res)));
 

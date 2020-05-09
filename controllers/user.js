@@ -1,4 +1,6 @@
 const UserService = require('../services/user');
+const _ = require('lodash');
+
 module.exports = {
     async getAllUsers(req, res){
         try{
@@ -49,12 +51,11 @@ module.exports = {
             }
             
             req.body._id = _id;
-            const users = await UserService.createUser(req.body);
+            const user = await UserService.createUser(req.body);
 
             return res.successResponse({
-                message: (users.length < 1) ? 'No user available' : 'Successful',
-                data: users,
-                total: 0,
+                message: 'User created successfully',
+                data: _.pick(user, ['_id', 'first_name', 'last_name', 'user_name', 'email']),
               });
         } catch(e){
             console.log(e);

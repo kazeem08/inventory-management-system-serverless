@@ -4,13 +4,10 @@ module.exports = {
 
     async createClient(req, res){
         try{
-            console.log('I AM HERRE');
             const clients = await ClientService.createClient(req.body);
-            console.log(clients);
             return res.successResponse({
-                message: (clients.length < 1) ? 'No user available' : 'Successful',
+                message: 'Client Successfully created',
                 data: clients,
-                total: 0,
               });
         } catch(e){
             console.log(e);

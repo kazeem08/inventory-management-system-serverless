@@ -1,3 +1,4 @@
+const _ = require('lodash');
 const SalesService = require('../services/sales');
 
 module.exports = {
@@ -15,15 +16,30 @@ module.exports = {
         }
     },
 
-    async getAllClients(req, res){
+    async getAllSales(req, res){
         try{
-            console.log('I AM HERRE');
-            const clients = await ClientService.getClients(req.params);
-            console.log(clients);
+            const { _id } = req.user;
+            const sales = await SalesService.getSales(_id);
+
             return res.successResponse({
-                message: (clients.length < 1) ? 'No user available' : 'Successful',
-                data: clients,
-                total: 0,
+                message: (sales.length < 1) ? 'No sales available' : 'Successful',
+                data: sales,
+                total: sales.length,
+              });
+        } catch(e){
+            console.log(e);
+        }
+       
+    },
+
+    async getSalesById(req, res){
+        try{
+            const sales = await SalesService.findSalesById(req.params.id);
+
+            return res.successResponse({
+                message: (sales.length < 1) ? 'No sales available' : 'Successful',
+                data: sales,
+                total: sales.length,
               });
         } catch(e){
             console.log(e);
