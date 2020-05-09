@@ -1,7 +1,10 @@
 const ProductService = require('../services/product');
+const { createProductSchema } = require('../schemas/products');
 
 module.exports = {
     async addProduct(req, res) {
+
+        await createProductSchema.validateAsync(req.body);
         try {
             const { _id } = req.user;
             const product = await ProductService.createProduct(req.body, _id);
@@ -13,6 +16,9 @@ module.exports = {
             });
         } catch (e) {
             console.log(e);
+            return res.errorResponse({
+                message: 'error occured',
+            });
         }
     },
 
@@ -24,7 +30,7 @@ module.exports = {
                 message: (product.length < 1) ? 'No product available' : 'Successful',
                 data: product,
                 total: 0,
-            })
+            });
         } catch (e) {
             console.log(e);
         }
