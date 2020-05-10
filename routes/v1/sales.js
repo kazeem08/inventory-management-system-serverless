@@ -14,6 +14,8 @@ route.get('/:id', asyncHandler((req, res) => SalesController.getSalesById(req, r
 
 route.post('/', asyncHandler((req, res) => SalesController.addSales(req, res)));
 
+route.post('/payment', asyncHandler((req, res) => SalesController.makePayment(req, res)));
+
 route.put('/:id', asyncHandler((req, res) => SalesController.updateProduct(req, res)));
 
 route.delete('/:id', asyncHandler((req, res) => SalesController.deleteProduct(req, res)));

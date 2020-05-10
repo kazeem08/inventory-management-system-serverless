@@ -1,7 +1,10 @@
 const CustomerService = require('../services/customer');
+const { createCustomerSchema } = require('../schemas/customer');
 
 module.exports = {
     async createCustomer(req, res) {
+        await createCustomerSchema.validateAsync(req.body);
+
         try {
             const { _id } = req.user;
             const customer = await CustomerService.addCustomer(req.body, _id);
@@ -50,4 +53,20 @@ module.exports = {
             });
         }
     },
+
+    async getCustomerSales(req, res) {
+        try {
+            const { _id } = req.user;
+            const {customer_id} = req.query;
+            const sales = await CustomerService.findCustomerSales(customer_id);
+            return res.successResponse({
+                message: (sales.length < 1) ? 'No sales available' : 'Successful',
+                data: sales,
+            })
+        } catch (e) {
+            console.log(e);
+        }
+},
+
+  
 }

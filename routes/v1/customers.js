@@ -10,6 +10,8 @@ const CustomersController = require('../../controllers/customer');
 
 route.get('/', asyncHandler((req, res) => CustomersController.getAllCustomers(req, res)));
 
+route.get('/sales', asyncHandler((req, res) => CustomersController.getCustomerSales(req, res)));
+
 route.get('/:id', asyncHandler((req, res) => CustomersController.getProductById(req, res)));
 
 route.post('/', asyncHandler((req, res) => CustomersController.createCustomer(req, res)));

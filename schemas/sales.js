@@ -9,24 +9,23 @@ const Joi = require('@hapi/joi');
 
 //declare fields here
 const name = Joi.string();
-const quantity = Joi.number().min(1);
+const quantity = Joi.number();
 const type = Joi.string();
-const company_name = Joi.string();
-const sales_price = Joi.string();
 const tag = Joi.string();
-const reorder_point = Joi.number();
-const cost_price = Joi.string();
+const cost_price = Joi.number().min(1);
+const sales_price = Joi.number().min(1);
+const reorder_point = Joi.number().min(1);
+
 
 module.exports = {
-  createProductSchema: Joi.object({
+  addSalesSchema: Joi.object({
     name: name.required(),
     quantity: quantity.required(),
     type,
     sales_price: sales_price.required(),
-    cost_price: cost_price.required(),
-    company_name,
-    tag,
+    tag: tag.required(),
     reorder_point: reorder_point.required(),
+    cost_price: cost_price.required(),
 
   }),
 

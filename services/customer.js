@@ -1,6 +1,6 @@
 const CustomerModel = require('../models/customer');
 const UserModel = require('../models/user');
-
+const SalesModel = require('../models/sales');
 
 module.exports = {
   async addCustomer(params, id) {
@@ -25,4 +25,10 @@ module.exports = {
     const customer = await CustomerModel.findById(id);
     return customer;
   },
+
+  async findCustomerSales(id) {
+    const sales = await SalesModel.find({customer_id: id});
+    return sales;
+  },
+
 }

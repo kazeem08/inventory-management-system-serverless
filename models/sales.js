@@ -61,6 +61,14 @@ const salesSchema = new Schema({
         type: String,
         default: 'unpaid',
     },
+    tax: {
+        type: Number,
+        default: 0,
+    },
+    invoice_no: {
+        type: Number,
+        required: true,
+    },
 }, {
     timestamps: true,
 });
