@@ -1,7 +1,7 @@
 const _ = require('lodash');
 const UserService = require('../services/user');
 const UserModel = require('../models/user');
-const { createUserSchema } = require('../schemas/user');
+const { createUserSchema, loginUserSchema } = require('../schemas/user');
 
 
 module.exports = {
@@ -77,6 +77,7 @@ module.exports = {
     },
 
     async login(req, res) {
+        await loginUserSchema.validateAsync(req.body);
         const token = await UserService.login(req.body);
         if (token) {
             return res.successResponse({

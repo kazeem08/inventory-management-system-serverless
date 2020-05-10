@@ -12,10 +12,10 @@ const name = Joi.string();
 const quantity = Joi.number().min(1);
 const type = Joi.string();
 const company_name = Joi.string();
-const sales_price = Joi.string();
+const sales_price = Joi.number().min(1);
 const tag = Joi.string();
 const reorder_point = Joi.number();
-const cost_price = Joi.string();
+const cost_price = Joi.number().min(1);
 
 module.exports = {
   createProductSchema: Joi.object({

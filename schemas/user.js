@@ -34,8 +34,8 @@ module.exports = {
 
   }),
 
-  // updateProductSchema: Joi.object({
-  //   name,
-  //   price
-  // })
+  loginUserSchema: Joi.object({
+    email: email.required(),
+    password: password.required(),
+  })
 };
