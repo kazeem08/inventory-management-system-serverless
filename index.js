@@ -3,6 +3,7 @@ const serverless = require('serverless-http');
 const express = require('express');
 const bodyParser = require('body-parser');
 // const TerraLogger = require('terra-logger');
+const cors = require('cors');
 const responseManager = require('./lib/response_manager_middleware');
 const request_error_handler = require('./lib/response_manager_middleware');
 
@@ -10,6 +11,8 @@ const errorHandler = require('./lib/request_error_handler');
 const auth = require('./lib/auth');
 
 const app = express();
+
+app.use(cors());
 
 app.disable('x-powered-by');
 
