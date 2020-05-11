@@ -33,6 +33,7 @@
     "jsonwebtoken": "^8.5.1",
     "lodash": "^4.17.15",
     "mongoose": "^5.9.12",
+    "nodemailer": "^6.4.6",
     "serverless-http": "^2.3.0"
   },
   "jest": {

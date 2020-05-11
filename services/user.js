@@ -1,5 +1,7 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const AwsSqs = require('../lib/aws_sqs');
+
 ;
 const UserModel = require('../models/user');
 
@@ -31,6 +33,8 @@ module.exports = {
 
         //create user
         const result = await UserModel.create(body);
+        AwsSqs.sendMessage(`${process.env.EMAIL_QUEUE}`, {subject: 'Hello', body: "Welcome", to: 'kaka_lanree@yahoo.com'});
+
         return result;
     },
 

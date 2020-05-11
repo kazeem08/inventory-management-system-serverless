@@ -66,6 +66,8 @@ module.exports = {
             req.body._id = _id;
             const user = await UserService.createUser(req.body);
 
+
+            
             return res.successResponse({
                 message: 'User created successfully',
                 data: _.pick(user, ['_id', 'first_name', 'last_name', 'user_name', 'email']),

@@ -12,6 +12,22 @@ provider:
   iamRoleStatements:
     - Effect: "Allow"
       Action:
+        - "sqs:SendMessage"
+        - "sqs:GetQueueUrl"
+        - "sqs:ReceiveMessage"
+        - "sqs:DeleteMessage"
+        - "sqs:GetQueueAttributes"
+      Resource: "arn:aws:sqs:${self:provider.region}:${env:AWS_ACCOUNT_ID}:${env:SQS_QUEUE_URL}"
+    - Effect: "Allow"
+      Action:
+        - "sqs:ListQueues"
+        - "sqs:SendMessage"
+        - "sqs:GetQueueUrl"
+        - "sqs:DeleteMessage"
+        - "sqs:ReceiveMessage"
+      Resource: "arn:aws:sqs:${self:provider.region}:${env:AWS_ACCOUNT_ID}:*"
+    - Effect: "Allow"
+      Action:
         - "es:ESHttpGet"
         - "es:ESHttpPut"
         - "es:ESHttpDelete"
@@ -27,9 +43,23 @@ functions:
       - http: ANY /
       - http: 'ANY {proxy+}'
 
+  sendEmailNotification:
+    handler: consumers/queue.sendEmailNotification
+    events:
+      - sqs:
+          arn:
+            Fn::GetAtt:
+              - SendEmailNotificationQueue
+              - Arn
+          batchSize: 1
+
 
 resources:
   Resources:
+    SendEmailNotificationQueue:
+      Type: "AWS::SQS::Queue"
+      Properties:
+        QueueName: ${env:EMAIL_QUEUE}
 
 plugins:
   - serverless-offline
