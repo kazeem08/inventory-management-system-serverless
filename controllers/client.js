@@ -16,9 +16,9 @@ module.exports = {
 
     async getAllClients(req, res){
         try{
-            console.log('I AM HERRE');
+
             const clients = await ClientService.getClients(req.params);
-            console.log(clients);
+            // console.log(clients);
             return res.successResponse({
                 message: (clients.length < 1) ? 'No user available' : 'Successful',
                 data: clients,

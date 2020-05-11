@@ -8,8 +8,9 @@ module.exports = {
     async getAllUsers(req, res) {
 
         try {
+
             const users = await UserService.getUsers(req.params);
-            console.log(users);
+            // console.log(users);
             return res.successResponse({
                 message: (users.length < 1) ? 'No user available' : 'Successful',
                 data: users,
@@ -46,6 +47,8 @@ module.exports = {
 
         try {
             const { role, _id } = req.user;
+            const {host} = req.headers
+            console.log('REQQQ', host);
 
             // check if user has admin privilege
             if (role !== 'admin') {
@@ -64,10 +67,8 @@ module.exports = {
             }
 
             req.body._id = _id;
-            const user = await UserService.createUser(req.body);
+            const user = await UserService.createUser(req.body, host);
 
-
-            
             return res.successResponse({
                 message: 'User created successfully',
                 data: _.pick(user, ['_id', 'first_name', 'last_name', 'user_name', 'email']),
@@ -79,6 +80,21 @@ module.exports = {
     },
 
     async login(req, res) {
+        await loginUserSchema.validateAsync(req.body);
+        const token = await UserService.login(req.body);
+        if (token) {
+            return res.successResponse({
+                message: 'User successfully login',
+                data: { token },
+            });
+        };
+
+        return res.errorResponse({
+            message: 'Invalid username/password',
+        });
+    },
+
+    async signup(req, res) {
         await loginUserSchema.validateAsync(req.body);
         const token = await UserService.login(req.body);
         if (token) {
