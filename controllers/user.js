@@ -78,6 +78,15 @@ module.exports = {
 
     async login(req, res) {
         await loginUserSchema.validateAsync(req.body);
+        
+        //Check if user has been verified
+        const user = await UserModel.findOne({email: body.email});
+        if (!user.is_verified) {
+            return res.successResponse({
+                message: 'Your account has not been approved',
+            });
+        };
+        
         const token = await UserService.login(req.body);
         if (token) {
             return res.successResponse({
@@ -87,7 +96,7 @@ module.exports = {
         };
 
         return res.errorResponse({
-            message: 'Invalid username/password',
+            message: 'Invalid username or password',
         });
     },
 
