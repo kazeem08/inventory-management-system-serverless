@@ -1,6 +1,7 @@
 const _ = require('lodash');
 const UserService = require('../services/user');
 const UserModel = require('../models/user');
+const TokenModel = require('../models/token');
 const { createUserSchema, loginUserSchema } = require('../schemas/user');
 
 
@@ -8,9 +9,7 @@ module.exports = {
     async getAllUsers(req, res) {
 
         try {
-
             const users = await UserService.getUsers(req.params);
-            // console.log(users);
             return res.successResponse({
                 message: (users.length < 1) ? 'No user available' : 'Successful',
                 data: users,
@@ -47,8 +46,7 @@ module.exports = {
 
         try {
             const { role, _id } = req.user;
-            const {host} = req.headers
-            console.log('REQQQ', host);
+            const { host } = req.headers
 
             // check if user has admin privilege
             if (role !== 'admin') {
@@ -107,6 +105,51 @@ module.exports = {
         return res.errorResponse({
             message: 'Invalid username/password',
         });
+    },
 
-    }
+    async verifyAccount(req, res) {
+        // await loginUserSchema.validateAsync(req.body);
+
+        try {
+            const { token } = req.query;
+            const is_token = await TokenModel.findOne({ token });
+
+            // check if token is valid
+            if (!is_token) {
+                return res.errorResponse({
+                    message: 'We were unable to find a valid token. Your token my have expired.',
+                    statusCode: 401,
+                });
+            }
+
+            // Check if account has already been verified
+            const user = await UserModel.findById(is_token.user_id);
+            if (user.is_verified) {
+                return res.errorResponse({
+                    message: 'Your account has already been verified',
+                    statusCode: 401,
+                });
+            }
+
+            // verify if user exits
+            if (String(user._id) !== is_token.user_id) {
+                return res.errorResponse({
+                    message: 'We were unable to find a user for this token.',
+                    statusCode: 401,
+                });
+            }
+
+            // update user record to verify = true
+            await UserModel.findByIdAndUpdate({ _id: is_token.user_id }, { is_verified: true });
+
+            return res.successResponse({
+                message: 'The account has been verified. Please log in.',
+            });
+        } catch (e) {
+            console.log(e);
+        }
+        // verify token
+
+
+    },
 }

@@ -2,6 +2,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const AwsSqs = require('../lib/aws_sqs');
 const TokenModel = require('../models/token');
+const queue = require('../consumers/queue');
 
 ;
 const UserModel = require('../models/user');
@@ -35,19 +36,28 @@ module.exports = {
         const result = await UserModel.create(body);
 
         const token = await jwt.sign(password, process.env.tokenKey);
-        const link = `http://${host}/confirmation/${token}`;
+        const link = `http://${host}/v1/users/confirmation?token=${token}`;
 
         console.log('TOKEN', token);
         console.log('LINKK', link);
 
-       await AwsSqs.sendMessage(`${process.env.EMAIL_QUEUE}`, {
-           subject: 'Hello', 
-           body: `Hello, Please click the lnk below to verify your account
-           ${link}
+    //    await AwsSqs.sendMessage(`${process.env.EMAIL_QUEUE}`, {
+    //        subject: 'Hello', 
+    //        body: `Hello, Please click the lnk below to verify your account
+    //        ${link}
 
-           password: ${password}
-           `, 
-           to: 'kaka_lanree@yahoo.com'});
+    //        password: ${password}
+    //        `, 
+    //        to: 'kaka_lanree@yahoo.com'});
+
+           await queue.sendEmailNotification({
+            subject: 'Hello', 
+            body: `Hello, Please click <a href=${link}>here</a> to verify your account<br>
+            
+            Please change your password after you login.<br>
+            password: ${password}`, 
+            // body: link,
+            to: body.email});
 
         await TokenModel.create({user_id: result._id, token});
 
@@ -66,6 +76,6 @@ module.exports = {
         const token = jwt.sign({ _id: user._id, role: user.role }, process.env.jwtPrivateKey);
 	    return token;
         
+    },
 
-    }
 }

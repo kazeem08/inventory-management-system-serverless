@@ -28,7 +28,7 @@ app.use(request_error_handler);
 
 // app.use(TerraLogger.requestHandler);
 
-app.use(auth);
+// app.use(auth);
 
 require('./routes')(app);
 

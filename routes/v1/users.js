@@ -10,13 +10,13 @@ const UserController = require('../../controllers/user');
 
 route.get('/', asyncHandler((req, res) => UserController.getAllUsers(req, res)));
 
+route.get('/confirmation', asyncHandler((req, res) => UserController.verifyAccount(req, res)));
+
 route.get('/:id', asyncHandler((req, res) => UserController.getUserById(req, res)));
 
 route.post('/', asyncHandler((req, res) => UserController.createUser(req, res)));
 
 route.post('/login', asyncHandler((req, res) => UserController.login(req, res)));
-
-route.post('/signup', asyncHandler((req, res) => UserController.login(req, res)));
 
 route.post('/signup', asyncHandler((req, res) => UserController.login(req, res)));
 

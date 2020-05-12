@@ -2,7 +2,8 @@ const nodemailer = require('nodemailer');
 
 module.exports = {
     sendEmailNotification: async (event, context) => {
-        const consumeState = JSON.parse(event.Records[0].body);
+        // const consumeState = JSON.parse(event.Records[0].body);
+        const consumeState = event;
     
         const {
           body, to, subject,
