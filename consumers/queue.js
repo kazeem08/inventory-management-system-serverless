@@ -1,4 +1,5 @@
 const nodemailer = require('nodemailer');
+const config = require('../config')
 
 module.exports = {
     sendEmailNotification: async (event, context) => {
@@ -15,8 +16,8 @@ module.exports = {
           port: 465,
           secure: true,
           auth: {
-            user: process.env.ADMIN_EMAIL,
-            pass: process.env.ADMIN_EMAIL_PASSWORD,
+            user: config.admin_email,
+            pass: config.admin_password,
           },
           tls: {
             rejectUnauthorized: false,
@@ -24,7 +25,7 @@ module.exports = {
         });
     
         const emailData = {
-          from: `Kazeem test ✔ <${process.env.ADMIN_EMAIL}>`,
+          from: `Kazeem test ✔ <${config.admin_email}>`,
           to,
           subject,
           html: body,

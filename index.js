@@ -6,6 +6,7 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const responseManager = require('./lib/response_manager_middleware');
 const request_error_handler = require('./lib/response_manager_middleware');
+const config = require('./config')
 
 const errorHandler = require('./lib/request_error_handler');
 const auth = require('./lib/auth');
@@ -33,7 +34,7 @@ app.use(auth);
 require('./routes')(app);
 
 app.get('/', async (req, res) => {
-  res.send(`Welcome to ${process.env.APP_NAME}`);
+  res.send(`Welcome to ${config.appName}`);
 });
 
 // must be the last middleware
