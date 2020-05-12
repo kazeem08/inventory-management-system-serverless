@@ -74,7 +74,6 @@ module.exports = {
         } catch (e) {
             console.log(e);
         }
-
     },
 
     async login(req, res) {
@@ -109,7 +108,6 @@ module.exports = {
 
     async verifyAccount(req, res) {
         // await loginUserSchema.validateAsync(req.body);
-
         try {
             const { token } = req.query;
             const is_token = await TokenModel.findOne({ token });

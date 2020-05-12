@@ -15,7 +15,7 @@ module.exports = {
         const { customer_id, products, tax, type } = body;
 
         const { company_name, client_id, email, billing_address, balance: customer_balance } = await CustomerModel.findById(customer_id);
-        const temp = [];
+        const product_array = [];
         let total_before = 0;
         let total_after = 0;
 
@@ -23,7 +23,7 @@ module.exports = {
             const { sales_price } = await ProductModel.findById(elem.product_id);
             total_before += sales_price * elem.quantity;
 
-            temp.push(elem);
+            product_array.push(elem);
         }
 
         if (tax) {
@@ -55,7 +55,7 @@ module.exports = {
         const new_customer_balance = customer_balance + total_after;
         await CustomerModel.findByIdAndUpdate({_id: customer_id },{balance: new_customer_balance});
 
-        for (let elem of temp) {
+        for (let elem of product_array) {
             const { quantity } = await ProductModel.findById(elem.product_id);
             const new_quantity = quantity - elem.quantity;
             console.log(elem.product_id, quantity, new_quantity);
@@ -87,7 +87,7 @@ module.exports = {
         const { company_name: customer_name } = await CustomerModel.findById(customer_id);
 
         let total_amount_paid = 0;
-        const temp = [];
+        const payment_array = [];
         // loop through payments and update sales balance
         for (let elem of payments) {
             const { balance, invoice_no, invoice_date, due_date } = await SalesModel.findById(elem._id);
@@ -102,7 +102,7 @@ module.exports = {
                 due_date,
             }
 
-            temp.push(payment_obj); //push payments object into an arrya to be indexed later
+            payment_array.push(payment_obj); //push payments object into an arrya to be indexed later
             total_amount_paid += elem.amount_received; //tract total amount paid
 
             const update_params = { balance: remaining_balance }
@@ -115,7 +115,7 @@ module.exports = {
         };
 
         //insert payment object
-        await PaymentModel.insertMany(temp);
+        await PaymentModel.insertMany(payment_array);
 
         // Get customer blance, subtract total amount paid amd update with new balance
         const { balance } = await CustomerModel.findById(customer_id);
