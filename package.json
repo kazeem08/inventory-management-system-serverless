@@ -19,7 +19,7 @@
     "nyc": "^14.1.1",
     "pre-commit": "^1.2.2",
     "serverless-dotenv-plugin": "^2.1.1",
-    "serverless-offline": "^5.12.0"
+    "serverless-offline": "^12.0.4"
   },
   "dependencies": {
     "@hapi/joi": "^16.1.7",
